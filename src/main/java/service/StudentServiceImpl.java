@@ -1,6 +1,8 @@
 package service;
 
 import client.ResultClient;
+import com.grpc_system.stubs.common.Gender;
+import com.grpc_system.stubs.common.Grade;
 import com.grpc_system.stubs.student.*;
 import dao.StudentDao;
 import entity.Student;
@@ -30,7 +32,9 @@ public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBas
             List<String> results = getResults(studentId);
 
             // once results is retrieved, generate studentResponse
-            StudentResponse studentResponse = StudentResponse.newBuilder().setStudentId(studentId).setName(student.getName()).setAge(student.getAge()).setGender(Gender.valueOf(student.getGender())).setMaths(Grade.valueOf(results.get(0))).setArt(Grade.valueOf(results.get(1))).setChemistry(Grade.valueOf(results.get(2))).build();
+            StudentResponse studentResponse = StudentResponse.newBuilder()
+                    .setStudentId(studentId).setName(student.getName()).setAge(student.getAge())
+                    .setGender(Gender.valueOf(student.getGender())).setMaths(Grade.valueOf(results.get(0))).setArt(Grade.valueOf(results.get(1))).setChemistry(Grade.valueOf(results.get(2))).build();
 
             studentResponseStreamObserver.onNext(studentResponse);
             studentResponseStreamObserver.onCompleted();
@@ -44,5 +48,22 @@ public class StudentServiceImpl extends StudentServiceGrpc.StudentServiceImplBas
     private List<String> getResults(String studentId) {
         return new ResultClient(ManagedChannelBuilder.forTarget(RESULT_SERVER).usePlaintext().build())
                 .getResults(studentId);
+    }
+
+    // persist new student details to table
+    @Override
+    public void addNewStudentInfo(StudentDetails studentDetails, StreamObserver<StudentDetailsResponseMessage> studentDetailsResponseMessageStreamObserver) {
+        try {
+            List<StudentResponse> studentList = studentDetails.getStudentListList();
+            String studentDetailsMessage = studentDao.addNewStudents(studentList);
+            StudentDetailsResponseMessage studentDetailsResponseMessage = StudentDetailsResponseMessage.newBuilder()
+                    .setResponseMessage(studentDetailsMessage).build();
+
+            studentDetailsResponseMessageStreamObserver.onNext(studentDetailsResponseMessage);
+            studentDetailsResponseMessageStreamObserver.onCompleted();
+        } catch (RuntimeException runtimeException) {
+            logger.log(Level.SEVERE, "Issue saving students to table");
+            studentDetailsResponseMessageStreamObserver.onError(Status.DATA_LOSS.asRuntimeException());
+        }
     }
 }

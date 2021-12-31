@@ -1,14 +1,13 @@
 package service;
 
-import com.grpc_system.stubs.result.Grade;
-import com.grpc_system.stubs.result.ResultRequest;
-import com.grpc_system.stubs.result.ResultResponse;
-import com.grpc_system.stubs.result.ResultServiceGrpc;
+import com.grpc_system.stubs.common.Grade;
+import com.grpc_system.stubs.result.*;
 import dao.ResultDao;
 import entity.Result;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +38,23 @@ public class ResultServiceImpl extends ResultServiceGrpc.ResultServiceImplBase {
         } catch (NoSuchElementException noSuchElementException) {
             logger.log(Level.SEVERE, "NO SUCH STUDENT FOUND WITH STUDENT ID: " + studentId);
             resultResponseStreamObserver.onError(Status.NOT_FOUND.asRuntimeException());
+        }
+    }
+
+    // add new results
+    public void addNewResultsForStudent(ResultDetails resultDetails, StreamObserver<ResultDetailsResponseMessage> resultDetailsResponseMessageStreamObserver) {
+        try {
+            List<ResultResponse> resultList = resultDetails.getResultListList();
+            String resultDetailsMessage = resultDao.addNewResults(resultList);
+
+            ResultDetailsResponseMessage resultDetailsResponseMessage = ResultDetailsResponseMessage.newBuilder()
+                    .setResponseMessage(resultDetailsMessage).build();
+
+            resultDetailsResponseMessageStreamObserver.onNext(resultDetailsResponseMessage);
+            resultDetailsResponseMessageStreamObserver.onCompleted();
+        } catch (RuntimeException runtimeException) {
+            logger.log(Level.SEVERE, "Issue saving results to table");
+            resultDetailsResponseMessageStreamObserver.onError(Status.DATA_LOSS.asRuntimeException());
         }
     }
 }

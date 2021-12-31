@@ -1,9 +1,6 @@
 package entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
@@ -11,6 +8,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Data
+@Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
