@@ -1,11 +1,11 @@
-package service;
+package student_info_system.service;
 
 import com.grpc_system.stubs.common.Grade;
 import com.grpc_system.stubs.result.*;
-import dao.ResultDao;
-import entity.Result;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import student_info_system.dao.ResultDao;
+import student_info_system.entity.Result;
 
 import java.util.List;
 import java.util.NoSuchElementException;

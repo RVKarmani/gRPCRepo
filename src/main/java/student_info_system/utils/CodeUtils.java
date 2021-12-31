@@ -1,9 +1,9 @@
-package utils;
+package student_info_system.utils;
 
 import com.grpc_system.stubs.result.ResultResponse;
 import com.grpc_system.stubs.student.StudentResponse;
-import entity.Result;
-import entity.Student;
+import student_info_system.entity.Result;
+import student_info_system.entity.Student;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

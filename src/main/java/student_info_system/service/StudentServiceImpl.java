@@ -1,15 +1,15 @@
-package service;
+package student_info_system.service;
 
-import client.ResultClient;
 import com.grpc_system.stubs.common.Gender;
 import com.grpc_system.stubs.common.Grade;
 import com.grpc_system.stubs.student.*;
-import dao.StudentDao;
-import entity.Student;
+import common.Constants;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
-import utils.Constants;
+import student_info_system.client.ResultClient;
+import student_info_system.dao.StudentDao;
+import student_info_system.entity.Student;
 
 import java.util.List;
 import java.util.NoSuchElementException;

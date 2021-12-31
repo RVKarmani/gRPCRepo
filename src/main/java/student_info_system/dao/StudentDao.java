@@ -1,8 +1,8 @@
-package dao;
+package student_info_system.dao;
 
 import com.grpc_system.stubs.student.StudentResponse;
-import entity.Student;
-import utils.Constants;
+import common.Constants;
+import student_info_system.entity.Student;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.CodeUtils.extractStudentFromStudentResponse;
+import static student_info_system.utils.CodeUtils.extractStudentFromStudentResponse;
 
 public class StudentDao {
 

@@ -1,4 +1,4 @@
-package client;
+package student_info_system.client;
 
 import com.grpc_system.stubs.result.ResultRequest;
 import com.grpc_system.stubs.result.ResultResponse;

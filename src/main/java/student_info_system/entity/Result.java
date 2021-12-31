@@ -1,4 +1,4 @@
-package entity;
+package student_info_system.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -8,25 +8,25 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Data
-@Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
-public class Student {
+@Builder
+public class Result {
     @Id
     private String studentId;
 
-    private String name;
-    private Integer age;
-    private String gender;
+    private String maths;
+    private String art;
+    private String chemistry;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Student student = (Student) o;
-        return studentId != null && Objects.equals(studentId, student.studentId);
+        Result result = (Result) o;
+        return studentId != null && Objects.equals(studentId, result.studentId);
     }
 
     @Override

@@ -1,7 +1,7 @@
-package dao;
+package student_info_system.dao;
 
 import com.grpc_system.stubs.result.ResultResponse;
-import entity.Result;
+import student_info_system.entity.Result;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static utils.CodeUtils.extractResultFromStudentResponse;
+import static student_info_system.utils.CodeUtils.extractResultFromStudentResponse;
 
 public class ResultDao {
 

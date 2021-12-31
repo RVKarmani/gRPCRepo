@@ -1,9 +1,9 @@
-package server;
+package student_info_system.server;
 
+import common.Constants;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import service.StudentServiceImpl;
-import utils.Constants;
+import student_info_system.service.StudentServiceImpl;
 
 import java.io.IOException;
 import java.util.logging.Level;
